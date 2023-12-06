@@ -1,0 +1,143 @@
+import java.text.SimpleDateFormat;
+import java.util.*;
+
+class Task {
+    private String description;
+    private Date deadline;
+    private boolean repeat;
+    private List<Integer> repetitionDays;
+
+    public Task(String description, Date deadline, boolean repeat, List<Integer> repetitionDays) {
+        this.description = description;
+        this.deadline = deadline;
+        this.repeat = repeat;
+        this.repetitionDays = repetitionDays;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public Date getDeadline() {
+        return deadline;
+    }
+
+    public boolean isRepeat() {
+        return repeat;
+    }
+
+    public List<Integer> getRepetitionDays() {
+        return repetitionDays;
+    }
+
+    @Override
+    public String toString() {
+        return "Task{" +
+                "description='" + description + '\'' +
+                ", deadline=" + deadline +
+                ", repeat=" + repeat +
+                ", repetitionDays=" + repetitionDays +
+                '}';
+    }
+}
+
+public class TaskScheduler {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        Map<Date, List<Task>> schedule = new TreeMap<>(Comparator.reverseOrder());
+
+        while (true) {
+            System.out.println("1. Add Task");
+            System.out.println("2. View Schedule");
+            System.out.println("3. Exit");
+
+            int choice = scanner.nextInt();
+
+            switch (choice) {
+                case 1:
+                    addTask(scanner, schedule);
+                    break;
+                case 2:
+                    viewSchedule(schedule);
+                    break;
+                case 3:
+                    System.out.println("Exiting program...");
+                    System.exit(0);
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
+        }
+    }
+
+    private static void addTask(Scanner scanner, Map<Date, List<Task>> schedule) {
+        System.out.println("Enter task description:");
+        String taskDescription = scanner.next();
+
+        System.out.println("Enter date (YYYY-MM-DD):");
+        String dateStr = scanner.next();
+
+        try {
+            Date date = new SimpleDateFormat("yyyy-MM-dd").parse(dateStr);
+
+            // If the date already has tasks, add to the existing list; otherwise, create a new list
+            schedule.computeIfAbsent(date, k -> new ArrayList<>()).add(createTask(taskDescription, scanner));
+
+            System.out.println("Task added successfully!");
+        } catch (Exception e) {
+            System.out.println("Invalid date format. Please use YYYY-MM-DD.");
+        }
+    }
+
+    private static Task createTask(String description, Scanner scanner) {
+        System.out.println("Enter task deadline time (HH:mm):");
+        String time = scanner.next();
+        Date deadline = parseDeadlineTime(time);
+
+        System.out.println("Does the task repeat? (yes/no):");
+        String repeatInput = scanner.next();
+        boolean repeat = repeatInput.equalsIgnoreCase("yes");
+
+        List<Integer> repetitionDays = new ArrayList<>();
+        if (repeat) {
+            System.out.println("Enter repetition days (1-Monday, 2-Tuesday, ..., 7-Sunday):");
+            System.out.println("Enter 0 when done.");
+            int day;
+            while ((day = scanner.nextInt()) != 0) {
+                repetitionDays.add(day);
+            }
+        }
+
+        return new Task(description, deadline, repeat, repetitionDays);
+    }
+
+    private static Date parseDeadlineTime(String time) {
+        try {
+            return new SimpleDateFormat("HH:mm").parse(time);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Invalid time format. Please use HH:mm.");
+        }
+    }
+
+    private static void viewSchedule(Map<Date, List<Task>> schedule) {
+        System.out.println("=== Schedule ===");
+
+        for (Map.Entry<Date, List<Task>> entry : schedule.entrySet()) {
+            System.out.println(formatDate(entry.getKey()) + ":");
+            for (Task task : entry.getValue()) {
+                System.out.println(" - " + task.getDescription() +
+                        " (Deadline: " + new SimpleDateFormat("HH:mm").format(task.getDeadline()) +
+                        ", Repeat: " + task.isRepeat() +
+                        ", Repetition Days: " + task.getRepetitionDays() + ")");
+            }
+        }
+
+        System.out.println("================");
+    }
+
+    private static String formatDate(Date date) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        return sdf.format(date);
+    }
+}
