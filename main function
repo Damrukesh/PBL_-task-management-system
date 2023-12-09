@@ -7,12 +7,10 @@ int main() {
         std::cout << "1. Add Task\n";
         std::cout << "2. Delete Task\n";
         std::cout << "3. Complete Task\n";
-        std::cout << "4. Display Tasks\n";
-        std::cout << "5. Display Calendar\n";
-        std::cout << "6. Display Unassigned Tasks\n";
-        std::cout << "7. Display Completed Tasks\n";
-        std::cout << "8. End of Day\n";
-        std::cout << "9. Exit\n";
+        std::cout << "4. Display Calendar\n";
+        std::cout << "5. Display Completed Tasks\n";
+        std::cout << "6. End of Day\n";
+        std::cout << "7. Exit\n";
         std::cout << "Enter your choice: ";
         std::cin >> choice;
 
