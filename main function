@@ -1,0 +1,75 @@
+int main() {
+    TaskManager taskManager;
+    int choice;
+
+    do {
+        std::cout << "\nTask Management Interface:\n";
+        std::cout << "1. Add Task\n";
+        std::cout << "2. Delete Task\n";
+        std::cout << "3. Complete Task\n";
+        std::cout << "4. Display Tasks\n";
+        std::cout << "5. Display Calendar\n";
+        std::cout << "6. Display Unassigned Tasks\n";
+        std::cout << "7. Display Completed Tasks\n";
+        std::cout << "8. End of Day\n";
+        std::cout << "9. Exit\n";
+        std::cout << "Enter your choice: ";
+        std::cin >> choice;
+
+        switch (choice) {
+            case 1: {
+                std::string description, date;
+                int priority;
+
+                std::cin.ignore(); // Clear the newline character from the buffer
+
+                std::cout << "Enter task description: ";
+                std::getline(std::cin, description);
+
+                std::cout << "Enter task date (or leave empty for unassigned): ";
+                std::getline(std::cin, date);
+
+                // Assume priority is 0 initially, user can set it later if applicable
+                taskManager.addTask(Task(description, date, 0));
+                break;
+            }
+            case 2: {
+                int position;
+                std::cout << "Enter the position of the task to delete: ";
+                std::cin >> position;
+                taskManager.deleteTask(position);
+                break;
+            }
+            case 3: {
+                int position;
+                std::cout << "Enter the position of the task to mark as completed: ";
+                std::cin >> position;
+                taskManager.completeTask(position);
+                break;
+            }
+            case 4:
+                taskManager.displayTasks();
+                break;
+            case 5:
+                taskManager.displayCalendar();
+                break;
+            case 6:
+                taskManager.displayUnassignedTasks();
+                break;
+            case 7:
+                taskManager.displayCompletedTasks();
+                break;
+            case 8:
+                taskManager.endOfDay();
+                break;
+            case 9:
+                std::cout << "Exiting the Task Management Interface. Goodbye!\n";
+                break;
+            default:
+                std::cout << "Invalid choice. Please enter a valid option.\n";
+        }
+
+    } while (choice != 9);
+
+    return 0;
+}
