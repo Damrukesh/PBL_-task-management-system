@@ -3,9 +3,20 @@ private:
     std::unordered_map<std::string, std::list<Node*>> calendar;
     std::list<Node*> unassignedTasks;
     std::list<Node*> completedTasks;
+    std::string currentDate; // Added to track the current date
 
 public:
-    TaskManager() : head(nullptr) {}
+    TaskManager() : head(nullptr), currentDate("") {}
+
+    // Function to set the current date
+    void setCurrentDate(const std::string& date) {
+        currentDate = date;
+    }
+
+    // Function to get the current date
+    const std::string& getCurrentDate() const {
+        return currentDate;
+    }
 
     // Function to add a task at the end of the list
     void addTask(const Task& task) {
