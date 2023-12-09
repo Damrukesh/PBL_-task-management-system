@@ -1,0 +1,22 @@
+#include <iostream>
+#include <string>
+#include <unordered_map>
+#include <list>
+
+struct Task {
+    std::string description;
+    std::string date;
+    int priority; // Lower values indicate higher priority
+    bool completed;
+
+    Task(const std::string& desc, const std::string& d, int prio)
+        : description(desc), date(d), priority(prio), completed(false) {}
+};
+
+struct Node {
+    Task task;
+    Node* prev;
+    Node* next;
+
+    Node(const Task& t) : task(t), prev(nullptr), next(nullptr) {}
+};
