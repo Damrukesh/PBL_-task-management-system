@@ -5,7 +5,7 @@ class task_manager
     std::list<Node*> unassignedTasks;
     std::list<Node*> completedTasks;
     std::string currentDate; // Added to track the current date
-
+------------
 public:
     TaskManager() : head(nullptr), currentDate("") {}
 
@@ -18,7 +18,7 @@ public:
     const std::string& getCurrentDate() const {
         return currentDate;
     }
-
+--------------------------------------------------------
     // Function to add a task at the end of the list
     void addTask(const Task& task) {
         Node* newNode = new Node(task);
@@ -47,7 +47,7 @@ public:
             unassignedTasks.emplace_back(newNode);
         }
     }
-
+--------------------------------------------------------------------
     // Function to delete a task at a specific position
     void deleteTask(int position) {
         Node* current = head;
