@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
 #include <unordered_map>
-
+-----------------
 struct Task {
     std::string description;
     std::string date;
@@ -11,7 +11,7 @@ struct Task {
     Task(const std::string& desc, const std::string& d, int prio)
         : description(desc), date(d), priority(prio) {}
 };
-
+--------------------
 struct Node {
     Task task;
     Node* prev;
@@ -19,7 +19,7 @@ struct Node {
 
     Node(const Task& t) : task(t), prev(nullptr), next(nullptr) {}
 };
-
+--------------------
 class TaskManager {
 private:
     Node* head;
@@ -29,6 +29,7 @@ public:
     TaskManager() : head(nullptr) {}
 
     // Function to add a task at the end of the list
+
     void addTask(const Task& task) {
         Node* newNode = new Node(task);
 
@@ -42,8 +43,10 @@ public:
             current->next = newNode;
             newNode->prev = current;
         }
+.........................................................................
 
         // Add the task to the calendar
+
         calendar[task.date].emplace_back(newNode);
 
         // Set priorities only if there are more than 2 tasks on the same day
@@ -51,7 +54,7 @@ public:
             prioritizeTasks(calendar[task.date]);
         }
     }
-
+....................................................................................
     // Function to delete a task at a specific position
     void deleteTask(int position) {
         Node* current = head;
@@ -82,8 +85,9 @@ public:
             std::cout << "Invalid position. No task deleted.\n";
         }
     }
-
+........................................................................................................
     // Function to prioritize tasks based on user input
+
     void prioritizeTasks(const std::list<Node*>& tasks) {
         std::cout << "Setting priorities for tasks on the same day.\n";
         for (Node* node : tasks) {
@@ -94,8 +98,9 @@ public:
         // Sort the list based on priority
         tasks.sort([](const Node* a, const Node* b) { return a->task.priority < b->task.priority; });
     }
-
+.................................................................................................................
     // Function to display the entire task sequence
+
     void displayTasks() const {
         Node* current = head;
 
@@ -107,8 +112,9 @@ public:
             current = current->next;
         }
     }
-
+.............................................................................................................................
     // Function to display the entire calendar schedule
+
     void displayCalendar() const {
         std::cout << "Calendar Schedule:\n";
         for (const auto& entry : calendar) {
@@ -120,7 +126,7 @@ public:
         }
     }
 };
-
+...........................................................................................
 int main() {
     TaskManager taskManager;
     int choice;
@@ -152,6 +158,7 @@ int main() {
                 taskManager.addTask(Task(description, date, 0));
                 break;
             }
+
             case 2: {
                 int position;
                 std::cout << "Enter the position of the task to delete: ";
