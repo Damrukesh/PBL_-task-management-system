@@ -46,21 +46,15 @@ int main() {
                 break;
             }
             case 4:
-                taskManager.displayTasks();
-                break;
-            case 5:
                 taskManager.displayCalendar();
                 break;
-            case 6:
-                taskManager.displayUnassignedTasks();
-                break;
-            case 7:
+            case 5:
                 taskManager.displayCompletedTasks();
                 break;
-            case 8:
+            case 6:
                 taskManager.endOfDay();
                 break;
-            case 9:
+            case 7:
                 std::cout << "Exiting the Task Management Interface. Goodbye!\n";
                 break;
             default:
