@@ -1,0 +1,35 @@
+
+   // Function to display the completed tasks
+    void displayCompletedTasks() const {
+        std::cout << "Completed Tasks:\n";
+        for (Node* node : completedTasks) {
+            std::cout << "Description: " << node->task.description << "\n";
+            std::cout << "Priority: " << node->task.priority << "\n\n";
+        }
+    }
+
+    // Function to check if the user is calling off the day and move uncompleted tasks to the next day
+    void endOfDay() {
+        char choice;
+        std::cout << "Did you complete all tasks for today? (y/n): ";
+        std::cin >> choice;
+
+        if (choice == 'n' || choice == 'N') {
+            moveUncompletedTasksToNextDay();
+        }
+    }
+
+private:
+    // Helper function to move uncompleted tasks to the next day
+    void moveUncompletedTasksToNextDay() {
+        for (Node* node : unassignedTasks) {
+            calendar["tomorrow"].emplace_back(node);
+            node->task.date = "tomorrow";
+        }
+
+        // Clear the unassigned tasks list
+        unassignedTasks.clear();
+
+        std::cout << "Uncompleted tasks moved to the next day.\n";
+    }
+};
