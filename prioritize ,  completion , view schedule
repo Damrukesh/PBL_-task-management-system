@@ -1,0 +1,45 @@
+ // Function to prioritize tasks based on user input
+    void prioritizeTasks(const std::list<Node*>& tasks) {
+        std::cout << "Setting priorities for tasks on the same day.\n";
+        for (Node* node : tasks) {
+            std::cout << "Enter priority for task '" << node->task.description << "': ";
+            std::cin >> node->task.priority;
+        }
+
+        // Sort the list based on priority
+        tasks.sort([](const Node* a, const Node* b) { return a->task.priority < b->task.priority; });
+    }
+
+    // Function to mark a task as completed
+    void completeTask(int position) {
+        Node* current = head;
+        int currentPosition = 1;
+
+        while (current && currentPosition < position) {
+            current = current->next;
+            currentPosition++;
+        }
+
+        if (current) {
+            current->task.completed = true;
+
+            // Move the completed task to the completed tasks list
+            completedTasks.emplace_back(current);
+
+            std::cout << "Task marked as completed!\n";
+        } else {
+            std::cout << "Invalid position. No task marked as completed.\n";
+        }
+    }
+ // Function to display the entire calendar schedule
+    void displayCalendar() const {
+        std::cout << "Calendar Schedule:\n";
+        for (const auto& entry : calendar) {
+            for (Node* node : entry.second) {
+                std::cout << "Date: " << entry.first << "\n";
+                std::cout << "Description: " << node->task.description << "\n";
+                std::cout << "Priority: " << node->task.priority << "\n";
+                std::cout << "Completed: " << (node->task.completed ? "Yes" : "No") << "\n\n";
+            }
+        }
+    }
