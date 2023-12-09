@@ -1,4 +1,5 @@
-private:
+class task_manager
+{   private:
     Node* head;
     std::unordered_map<std::string, std::list<Node*>> calendar;
     std::list<Node*> unassignedTasks;
