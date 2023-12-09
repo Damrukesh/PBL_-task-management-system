@@ -1,0 +1,77 @@
+private:
+    Node* head;
+    std::unordered_map<std::string, std::list<Node*>> calendar;
+    std::list<Node*> unassignedTasks;
+    std::list<Node*> completedTasks;
+
+public:
+    TaskManager() : head(nullptr) {}
+
+    // Function to add a task at the end of the list
+    void addTask(const Task& task) {
+        Node* newNode = new Node(task);
+
+        if (!head) {
+            head = newNode;
+        } else {
+            Node* current = head;
+            while (current->next) {
+                current = current->next;
+            }
+            current->next = newNode;
+            newNode->prev = current;
+        }
+
+        if (!task.date.empty()) {
+            // Add the task to the calendar
+            calendar[task.date].emplace_back(newNode);
+            
+            // Set priorities only if there are more than 2 tasks on the same day
+            if (calendar[task.date].size() > 2) {
+                prioritizeTasks(calendar[task.date]);
+            }
+        } else {
+            // Add unassigned tasks to the list
+            unassignedTasks.emplace_back(newNode);
+        }
+    }
+
+    // Function to delete a task at a specific position
+    void deleteTask(int position) {
+        Node* current = head;
+        int currentPosition = 1;
+
+        while (current && currentPosition < position) {
+            current = current->next;
+            currentPosition++;
+        }
+
+        if (current) {
+            if (current->prev) {
+                current->prev->next = current->next;
+            } else {
+                head = current->next;
+            }
+
+            if (current->next) {
+                current->next->prev = current->prev;
+            }
+
+            // Remove the task from the calendar or unassigned list
+            if (!current->task.date.empty()) {
+                calendar[current->task.date].remove(current);
+            } else {
+                unassignedTasks.remove(current);
+            }
+
+            // Remove the task from the completed tasks list if it was completed
+            if (current->task.completed) {
+                completedTasks.remove(current);
+            }
+
+            delete current;
+            std::cout << "Task at position " << position << " deleted successfully!\n";
+        } else {
+            std::cout << "Invalid position. No task deleted.\n";
+        }
+    }
