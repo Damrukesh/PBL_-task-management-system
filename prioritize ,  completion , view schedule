@@ -1,4 +1,5 @@
  // Function to prioritize tasks based on user input
+
     void prioritizeTasks(const std::list<Node*>& tasks) {
         std::cout << "Setting priorities for tasks on the same day.\n";
         for (Node* node : tasks) {
@@ -9,8 +10,9 @@
         // Sort the list based on priority
         tasks.sort([](const Node* a, const Node* b) { return a->task.priority < b->task.priority; });
     }
-
+---------------------------------------------------------------------
     // Function to mark a task as completed
+
     void completeTask(int position) {
         Node* current = head;
         int currentPosition = 1;
@@ -31,6 +33,7 @@
             std::cout << "Invalid position. No task marked as completed.\n";
         }
     }
+------------------------------------------------------------------------------------
  // Function to display the entire calendar schedule
     void displayCalendar() const {
         std::cout << "Calendar Schedule:\n";
