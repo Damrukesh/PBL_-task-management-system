@@ -20,6 +20,7 @@ public:
     }
 --------------------------------------------------------
     // Function to add a task at the end of the list
+
     void addTask(const Task& task) {
         Node* newNode = new Node(task);
 
@@ -49,6 +50,7 @@ public:
     }
 --------------------------------------------------------------------
     // Function to delete a task at a specific position
+
     void deleteTask(int position) {
         Node* current = head;
         int currentPosition = 1;
