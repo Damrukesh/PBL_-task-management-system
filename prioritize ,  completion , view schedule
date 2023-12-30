@@ -35,6 +35,7 @@
     }
 ------------------------------------------------------------------------------------
  // Function to display the entire calendar schedule
+
     void displayCalendar() const {
         std::cout << "Calendar Schedule:\n";
         for (const auto& entry : calendar) {
